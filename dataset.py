@@ -1,3 +1,4 @@
+import re
 import torch
 import pandas as pd
 from collections import Counter
@@ -18,8 +19,14 @@ class Dataset(torch.utils.data.Dataset):
 
     def load_words(self):
         train_df = pd.read_csv('data/reddit-cleanjokes.csv')
-        text = train_df['Joke'].str.cat(sep=' ')
-        return text.split(' ')
+
+        word_string = ''
+        for i in range(0, train_df.shape[0]):
+            this_joke = train_df['Joke'][i]
+            if 'http' in this_joke:
+                continue
+            word_string += re.sub("[^a-zA-Z0-9' ]", '', this_joke) + ' '
+        return word_string.split(' ')
     
     def get_uniq_words(self):
         word_counts = Counter(self.words)

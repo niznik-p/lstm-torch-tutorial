@@ -6,14 +6,18 @@ from torch.utils.data import DataLoader
 from model import Model
 from dataset import Dataset
 
-def train(dataset, model, args):
-    model.train()
 
+def train(dataset, model, args):
+    model.train()  # sets the model to training mode
+
+    # this wraps an iterable around the dataset
     dataloader = DataLoader(dataset, batch_size=args.batch_size)
+    
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     for epoch in range(args.max_epochs):
+        # returns tensors of appropriate sizes
         state_h, state_c = model.init_state(args.sequence_length)
 
         for batch, (x, y) in enumerate(dataloader):
@@ -57,5 +61,5 @@ dataset = Dataset(args)
 model = Model(dataset)
 
 train(dataset, model, args)
-for i in range(0,10):
-    print(' '.join(predict(dataset, model, text='Knock knock. Whos there?', next_words=20)))
+for i in range(0, 25):
+    print(str(i) + ': ' + ' '.join(predict(dataset, model, text='What do you call a', next_words=20)))
