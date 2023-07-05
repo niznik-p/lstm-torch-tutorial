@@ -1,2 +1,3 @@
 # lstm-torch-tutorial
-Starting with a tutorial from KDnuggets on how to use an LSTM on PyTorch and getting creative
+
+Following [this tutorial](https://www.kdnuggets.com/2020/07/pytorch-lstm-text-generation-tutorial.html)
